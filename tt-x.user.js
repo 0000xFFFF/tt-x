@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         tt-x
 // @namespace    0000xFFFF
-// @version      1.0.0
+// @version      1.0.1
 // @description  Tiktokify X (formerly Twitter) - Use arrow keys (LEFT/RIGHT) to scroll feed + UNMUTE videos by default.
 // @author       0000xFFFF
 // @license      MIT
@@ -35,6 +35,7 @@ let viewportPost = null;
 let interval = null;
 
 function updateStuff() {
+
     const primaryColumn = document.querySelector('div[data-testid="primaryColumn"]');
     if (primaryColumn) {
         const timeline = primaryColumn.querySelector('div[aria-label="Timeline: Your Home Timeline"]');
@@ -113,3 +114,20 @@ document.body.addEventListener("keydown", (event) => {
         case "ArrowRight": next(); event.preventDefault(); break;
     }
 });
+
+let lastUrl = location.href;
+function onUrlChange() {
+    lastUrl = location.href;
+    updateStuff();
+    interval = setInterval(updateStuff, 1000);
+}
+
+// Hook into X's navigation API
+const observer = new MutationObserver(() => {
+    if (location.href !== lastUrl) {
+        onUrlChange();
+    }
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
+
