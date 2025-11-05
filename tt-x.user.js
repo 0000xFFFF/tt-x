@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name         tt-x
 // @namespace    0000xFFFF
-// @version      1.0.2
+// @version      1.0.3
 // @description  Tiktokify X (formerly Twitter) - Use arrow keys (LEFT/RIGHT) to scroll feed + UNMUTE videos by default.
 // @author       0000xFFFF
 // @license      MIT
-// @match        https://x.com/home
-// @match        https://x.com/*/status/*
+// @match        https://x.com/*
 // @run-at       document-end
 // @grant        none
 // @icon         data:image/ico;base64,AAABAAEAICAAAAEAIACgBAAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAgAAAAIAgGAAAAc3p69AAABGdJREFUeJztll1MW2UYx1valbaMDUdLG6alCI5uTkfZR5plYoVOYBezA8QisjIGriBiYS2llJ4W21FJML1i8cKtN9tQY0x0X8m2yM3WXRgxxot6MUMWTYg3YDSOixn+vu8p50jL6Cid4WZNnqR9T98+vz7/50sgEAgWiWEDbUOdPwVYCWCxWOD3+x9pOp0ubQc2m+1xdxMPpFIp7HY7BgcHYTQaeaOfqeXl5fHfFUok2Lx3P545VIltxOQqNYTLfqu2tpZ1Tu+nJYFWq2UvGgwG/qy8vJw9a2tr+w8gJwfaVitODHlgG/bixBEzNCIZ+4w6XYPz1XOAo1er1fyZ2WxOAKMApe9Y4WIY+Hw++OynYVIXs8/p96ic605CTgpq9H2yPFQKDmDAuwRAbPT9fpwdG0+4t+4q4KSg0Ug+o1IkA4TDYczPzeO76F0U63ZCkJWVGcByKajj5LOD1SYegHU+P4+FhQX2va2vHwcaGqHYoYMoEwAaRlpKyVLQM3cggH09H4A5M4rZ2Vng4T+IRCK8HF5ivccs0Eu2rh+AGk1EfyCIlu5ubHpOA3HhdqgLC+H+MIDx21FEv58GfV09+ynstWa4HU4ewtfYCqM0PwMAoRASTRHq/AFcuP8bnJc+Q117JyryVHiFSHDh3gweLC5iamoKTNNx1MgL8FKhBicrX8dgYwu8h+oyACBJJNujh4Y4POoYwE/3folrTGDaVTsgy8lF4Na3LAANPfOWFdUyJXtXJhBCK5ZBn70Vz4pTVsPqANkvlKGo04bjLjef5RRgZvpHHmAvyYG5vx+wCThqPQXTEkAa9ugHWXI58huaUO8ciGtJMt1r7cRlxwj++vImwjVvQkoASkgVfHXtGpsD0cjkkwOQaIvxYlcPKTFvPKMtbbAry3CkQIuwm8HHIwFsLynlyzAWiwGxGXTs2v9kAGT6Chzud8T/vWcY7j2VMG5R8dONdsM+jwe7O06xAKFQCHN3f8AV95m1dsDUAHIy5RqcrjiAewj2sgPobW7lZwG1kfFx9Fyc5DthxOnF7bGJhM65bgCpbhfquXpmfPhmOIQJfzBhurWS55/P/o5Pzp+Py1TXiI/eaEl3d1glCfMVeK2rm/1hWuOLf/wJP5l2ArGYlKcIIoUSqqZmXL3/K+ZIBYSCQQzpX4UhV8kPrMyGEWlAxaTRRCYn2QynrdbhcqGy+W1ojx5DibUdVfZ+TJw7xz6f/vo6ekmSKrMk8c6ZtDukD0BMUVSEO7Gf2RqnPYBGgyHmJPPfQarDu9Ruozdu4eEXN3DaYOI3Im4nWL7UpAVA5z0NJUNmQDeVYqkcE4yAMO++h8A+E+4MjSHo9iSsbDQCyWvcmgC4xYPbiDZnS3H45Qr01TfDe9IGX0cX23Y9B2vQq96JaqkCu58vXRF26pgCPEaKlYfcZrw8fDS0BaJsVMi3oSpXhSrS8fSbtrCac2Hn9gS6unHLLNc3UkiReJDGMpkycsmWQor0nPwP9hRgYwH+BaGLtwuK2EuqAAAAAElFTkSuQmCC
@@ -131,3 +130,5 @@ const observer = new MutationObserver(() => {
 });
 
 observer.observe(document.body, { childList: true, subtree: true });
+
+
