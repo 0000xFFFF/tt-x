@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         tt-x
 // @namespace    0000xFFFF
-// @version      1.0.4
+// @version      1.0.5
 // @description  Tiktokify X (formerly Twitter) - Use arrow keys (LEFT/RIGHT) to scroll feed + UNMUTE videos by default.
 // @author       0000xFFFF
 // @license      MIT
@@ -17,6 +17,15 @@ const CONFIG = {
     UNMUTE_VIDEOS: true,
     DEFAULT_VIDEO_VOLUME: 1,
     SCROLL_BEHAVIOUR: "instant" // change to "smooth" for smooth scroll
+}
+
+function isElementNearViewport(el) {
+    const rect = el.getBoundingClientRect();
+
+    return (
+        rect.top < window.innerHeight &&
+        rect.bottom > 0
+    );
 }
 
 function isElementInViewport(el) {
@@ -35,19 +44,33 @@ let viewportPost = null;
 let interval = null;
 
 function updateViewportPost() {
-
     const primaryColumn = document.querySelector('div[data-testid="primaryColumn"]');
     if (primaryColumn) {
         const timeline = primaryColumn.querySelector('div[aria-label="Timeline: Your Home Timeline"]');
         if (timeline) {
             const posts = primaryColumn.querySelectorAll('div[data-testid="cellInnerDiv"]');
+
+            let found = false;
             for (let i = 0; i < posts.length; i++) {
                 const post = posts[i];
                 if (isElementInViewport(post)) {
                     viewportPost = post;
                     clearTimeout(interval);
+                    found = true;
                 }
             }
+
+
+            if (!found) {
+                for (let i = 0; i < posts.length; i++) {
+                    const post = posts[i];
+                    if (isElementNearViewport(post)) {
+                        viewportPost = post;
+                        clearTimeout(interval);
+                    }
+                }
+            }
+
         }
     }
 }
@@ -84,7 +107,7 @@ if (CONFIG.UNMUTE_VIDEOS) {
 
 
 function next() {
-    if (!viewportPost) return;
+    if (!viewportPost) { updateViewportPost(); return; }
 
     const nextPost = viewportPost.nextElementSibling;
     if (nextPost) {
@@ -95,7 +118,7 @@ function next() {
 }
 
 function prev() {
-    if (!viewportPost) return;
+    if (!viewportPost) { updateViewportPost(); return; }
 
     const prevPost = viewportPost.previousElementSibling;
     if (prevPost) {
