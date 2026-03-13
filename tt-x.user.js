@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         tt-x
 // @namespace    0000xFFFF
-// @version      1.0.3
+// @version      1.0.4
 // @description  Tiktokify X (formerly Twitter) - Use arrow keys (LEFT/RIGHT) to scroll feed + UNMUTE videos by default.
 // @author       0000xFFFF
 // @license      MIT
@@ -34,7 +34,7 @@ function isElementInViewport(el) {
 let viewportPost = null;
 let interval = null;
 
-function updateStuff() {
+function updateViewportPost() {
 
     const primaryColumn = document.querySelector('div[data-testid="primaryColumn"]');
     if (primaryColumn) {
@@ -52,7 +52,7 @@ function updateStuff() {
     }
 }
 
-interval = setInterval(updateStuff, 1000);
+interval = setInterval(updateViewportPost, 1000);
 
 function unmute(video) {
     if (video && video.muted) {
@@ -118,8 +118,8 @@ document.body.addEventListener("keydown", (event) => {
 let lastUrl = location.href;
 function onUrlChange() {
     lastUrl = location.href;
-    updateStuff();
-    interval = setInterval(updateStuff, 1000);
+    updateViewportPost();
+    interval = setInterval(updateViewportPost, 1000);
 }
 
 // Hook into X's navigation API
@@ -131,4 +131,14 @@ const observer = new MutationObserver(() => {
 
 observer.observe(document.body, { childList: true, subtree: true });
 
+const onScrollStop = (callback, delay = 150) => {
+    let timer;
+    window.addEventListener('scroll', () => {
+        clearTimeout(timer);
+        timer = setTimeout(callback, delay);
+    }, { passive: true });
+};
 
+onScrollStop(() => {
+    updateViewportPost();
+});
